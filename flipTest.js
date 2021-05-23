@@ -1,5 +1,5 @@
 let flipRate = 25;
-let lineLength = 30;
+let lineLength = 40;
 let lastWord = 0;
 
 function makeDiv(id, ...classes) {
@@ -85,26 +85,25 @@ function fillFrame(target, rows) {
   return target.getElementsByClassName("char");
 }
 
-//
-//The holding elements for the individual character cells
-let quoteFrame = document.getElementById("quoteFrame");
-let charFrame = document.getElementById("charFrame");
-let animeFrame = document.getElementById("animeFrame");
-
-let quoteChars = fillFrame(quoteFrame, 5);
-let charChars = fillFrame(charFrame, 1);
-let animeChars = fillFrame(animeFrame, 2);
-
-
-fetch('https://animechan.vercel.app/api/random')
-    .then(response => response.json())
-    .then(quote => display(quote))
-
 function display(quote) {
+  //----------------------------------------------------//
+  //Displays the quotation and source in the frames     //
+  //JSON-> quote: JSON object retreived by the API call //
+  //----------------------------------------------------//
+
   console.log(quote);
 
   function displayFrame(target, cells, string) {
-    let lines = Array(cells.length / 30).fill("");
+    //----------------------------------------------------//
+    //Puts the text in a frame                            //
+    //HTML element-> target: which element (frame) the    //
+    //  text will be displayed in                         //
+    //HTML collection-> cells: the individual elements    //
+    //  (cells) where the letters will be displayed       //
+    //string-> string: the text to be displayed           //
+    //----------------------------------------------------//
+
+    let lines = Array(cells.length / lineLength).fill("");
     lastWord = 0;
 
     string = string.replace("’", "'").replace("/n", "");
@@ -147,3 +146,18 @@ function display(quote) {
   displayFrame(animeFrame, animeChars, quote.anime);
 
 }
+
+//
+//The holding elements for the individual character cells
+let quoteFrame = document.getElementById("quoteFrame");
+let charFrame = document.getElementById("charFrame");
+let animeFrame = document.getElementById("animeFrame");
+
+let quoteChars = fillFrame(quoteFrame, 5);
+let charChars = fillFrame(charFrame, 1);
+let animeChars = fillFrame(animeFrame, 2);
+
+
+fetch('https://animechan.vercel.app/api/random')
+    .then(response => response.json())
+    .then(quote => display(quote))
