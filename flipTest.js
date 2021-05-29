@@ -147,6 +147,12 @@ function display(quote) {
 
 }
 
+function findQuote() {
+  fetch('https://animechan.vercel.app/api/random')
+      .then(response => response.json())
+      .then(quote => display(quote))
+}
+
 //
 //The holding elements for the individual character cells
 let quoteFrame = document.getElementById("quoteFrame");
@@ -157,7 +163,14 @@ let quoteChars = fillFrame(quoteFrame, 5);
 let charChars = fillFrame(charFrame, 1);
 let animeChars = fillFrame(animeFrame, 2);
 
+findQuote();
 
-fetch('https://animechan.vercel.app/api/random')
+let quoteInterval = setInterval(function() {
+  findQuote();
+}, 30000);
+
+
+
+/*fetch('https://animechan.vercel.app/api/random')
     .then(response => response.json())
-    .then(quote => display(quote))
+    .then(quote => display(quote))*/
